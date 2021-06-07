@@ -18,51 +18,56 @@ namespace linqemployee
         public Form1()
         {
             InitializeComponent();
+            refreshContent();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            databaseService.addEmployee(textBox1.Text,textBox2.Text);
-            MessageBox.Show("Added "+textBox1.Text);
-            dataGridView1.DataSource = databaseService.getAll();
+            databaseService.addEmployee(name_txtbx.Text,city_txtbx.Text);
+            MessageBox.Show("Added "+name_txtbx.Text);
+            refreshContent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                databaseService.deleteEmployee(textBox1.Text);
-                MessageBox.Show("Deleted " + textBox1.Text);
+                databaseService.deleteEmployee(name_txtbx.Text,city_txtbx.Text,id_txtbx.Text);
+                MessageBox.Show("Deleted " + name_txtbx.Text);
             }
             catch {
                 MessageBox.Show("No such Employee to Delete");
             }
-            dataGridView1.DataSource = databaseService.getAll();
+            refreshContent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = databaseService.getAll();
-
+            refreshContent();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            var content= databaseService.findByOptions(textBox1.Text, textBox2.Text);
-            
-            dataGridView1.DataSource = content;
+            var content= databaseService.findByOptions(name_txtbx.Text, city_txtbx.Text);
+            refreshContent();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-
-            dataGridView1.DataSource = databaseService.getAll();
+            refreshContent();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            databaseService.updateEmployee(textBox1.Text, textBox2.Text, textBox3.Text);
+            databaseService.updateEmployee(name_txtbx.Text, city_txtbx.Text, id_txtbx.Text);
+            refreshContent();
+        }
+        void refreshContent()
+        {
             dataGridView1.DataSource = databaseService.getAll();
+            name_txtbx.Text = "";
+            city_txtbx.Text = "";
+            id_txtbx.Text = "";
         }
     }
 }

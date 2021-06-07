@@ -17,9 +17,9 @@ namespace linqemployee.Service
             databaseRepository.addEmployee(Name,City);
         }
 
-        internal void deleteEmployee(string name)
+        internal void deleteEmployee(string name,string city,string id)
         {
-            databaseRepository.deleteEmployee(name);
+            databaseRepository.deleteEmployee(name,city,id);
         }
 
         internal object getAll()

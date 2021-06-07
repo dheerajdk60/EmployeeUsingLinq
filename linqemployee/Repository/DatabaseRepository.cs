@@ -84,11 +84,27 @@ namespace linqemployee.Repository
 
         }
 
-        internal void deleteEmployee(string name)
+        internal void deleteEmployee(string name,string city,string id)
         {
-            var employee = (from emp in employees where emp.Name == name select emp); //employees.Where(e => e.Name == name).ToList().First();
-            
-            employees.DeleteOnSubmit(employee.ToList().First());
+            var employee = from emp in employees select emp ;
+            if (!string.IsNullOrEmpty(id))
+            {
+                 employee = (from emp in employees where emp.Id == Convert.ToInt32(id) select emp); //employees.Where(e => e.Name == name).ToList().First();
+            }
+            else if(!string.IsNullOrEmpty(name)&& !string.IsNullOrEmpty(city))
+            {
+                employee = (from emp in employees where emp.Name == name && emp.City==city select emp);
+            }
+            else if (!string.IsNullOrEmpty(name))
+            {
+                employee = (from emp in employees where emp.Name == name select emp);
+            }
+            else if (!string.IsNullOrEmpty(city))
+            {
+                employee = (from emp in employees where emp.City == city select emp);
+            }
+
+            employees.DeleteAllOnSubmit(employee);
             context.SubmitChanges();
         }
     }
